@@ -38,7 +38,6 @@ public class JwtProvider {
                 .setIssuedAt(new Date(now))
                 .setExpiration(accessTokenExpiration)
                 .signWith(SignatureAlgorithm.HS512, secret)
-                .setClaims(Map.of("roles", user.getAuthorities()))
                 .compact();
 
         return new AccessToken(token, accessTokenExpiration);

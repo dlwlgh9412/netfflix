@@ -1,7 +1,7 @@
 package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.UserService;
-import com.copago.netfflix.web.dto.RegisterUserRequest;
+import com.copago.netfflix.web.dto.UserRegisterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class UserRestControllerTest {
 
     @Test
     public void 회원가입_아이디_값이_비어있는_경우() throws Exception {
-        RegisterUserRequest request = new RegisterUserRequest("", "Password", "Password");
+        UserRegisterRequest request = new UserRegisterRequest("", "Password", "Password", "");
 
         mockMvc.perform(post("/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -43,7 +43,7 @@ class UserRestControllerTest {
 
     @Test
     public void 회원가입_비밀번호_값이_일치하지_않은_경우() throws Exception {
-        RegisterUserRequest request = new RegisterUserRequest("Test_ID", "", "Password");
+        UserRegisterRequest request = new UserRegisterRequest("Test_ID", "", "Password", "");
 
         mockMvc.perform(post("/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
