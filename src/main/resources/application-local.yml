@@ -17,3 +17,5 @@ jwt:
   secret: testSecret
   accessExpiration: 21421521521
   refreshExpiration: 12321321
+server:
+  port: 8000
