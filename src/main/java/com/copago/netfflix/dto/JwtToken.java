@@ -1,6 +1,7 @@
 package com.copago.netfflix.dto;
 
-import jakarta.validation.constraints.NotNull;
+
+import javax.validation.constraints.NotNull;
 
 public record JwtToken(
         @NotNull(message = "액세스 토큰이 비어있습니다.")

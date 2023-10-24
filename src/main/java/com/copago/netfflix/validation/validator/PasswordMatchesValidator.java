@@ -3,10 +3,16 @@ package com.copago.netfflix.validation.validator;
 import com.copago.netfflix.validation.annotation.PasswordMatches;
 import com.copago.netfflix.web.dto.UserPasswordUpdateRequest;
 import com.copago.netfflix.web.dto.UserRegisterRequest;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
+    @Override
+    public void initialize(PasswordMatches constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+    }
+
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         if (value instanceof UserRegisterRequest request) {

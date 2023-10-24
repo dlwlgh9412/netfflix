@@ -1,10 +1,10 @@
 package com.copago.netfflix.web.util;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WebAuthUtil {

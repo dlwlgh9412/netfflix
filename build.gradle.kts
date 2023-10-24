@@ -1,13 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.1.4"
+    id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
-}
-
-buildscript {
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:3.1.4")
-    }
 }
 
 
@@ -35,6 +29,8 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("org.springframework.security:spring-security-crypto")
 
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.15")
+
 
     implementation("org.flywaydb:flyway-core:9.16.0")
     implementation("org.flywaydb:flyway-mysql:9.16.0")
@@ -48,28 +44,6 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-//val profile = project.properties["profile"] as String? ?: "local"
-//
-//sourceSets {
-//    main {
-//        resources {
-//            srcDirs("src/main/resources", "src/main/resources/db-$profile")
-//        }
-//    }
-//
-//    test {
-//        java {
-//            srcDir("src/test/java")
-//        }
-//    }
-//}
-//
-//tasks {
-//    withType<Copy> {
-//        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//    }
-//}
 
 tasks.jar {
     enabled = false

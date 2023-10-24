@@ -1,3 +1,6 @@
+server:
+  port: 8000
+
 spring:
   jpa:
     open-in-view: false
@@ -17,5 +20,23 @@ jwt:
   secret: testSecret
   accessExpiration: 21421521521
   refreshExpiration: 12321321
-server:
-  port: 8000
+
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    groups:
+      enabled: true
+  cache:
+    disabled: true
+  swagger-ui:
+    groups-order: desc
+    operations-sorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  paths-to-match:
+    - /v1/**
+

@@ -1,7 +1,7 @@
 package com.copago.netfflix.web.dto;
 
-import jakarta.validation.constraints.NotBlank;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public record TokenRequest(
