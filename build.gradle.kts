@@ -64,12 +64,12 @@ tasks.withType<Test> {
 //        }
 //    }
 //}
-
-tasks {
-    withType<Copy> {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    }
-}
+//
+//tasks {
+//    withType<Copy> {
+//        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+//    }
+//}
 
 tasks.jar {
     enabled = false

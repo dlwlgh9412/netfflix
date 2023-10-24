@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+jwt:
+  issuer: netfflix-Test
+  secret: testSecret
+  accessExpiration: 21421521521
+  refreshExpiration: 12321321

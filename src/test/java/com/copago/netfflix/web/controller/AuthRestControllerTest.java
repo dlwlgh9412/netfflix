@@ -24,7 +24,7 @@ class AuthRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AuthService userService;
+    private AuthService authService;
 
     private String idValidMessage = "아이디는 필수 입력 값 입니다.";
     private String passwordValidMessage = "비밀번호는 필수 입력 값 입니다.";
