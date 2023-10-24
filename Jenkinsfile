@@ -8,9 +8,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'cp build/libs/netfflix-0.0.1-SNAPSHOT.jar /home/netfflix'
-                sh 'pkill -f netfflix-0.0.1-SNAPSHOT.jar || true'
-                sh 'nohup java -jar /home/netfflix/netfflix-0.0.1-SNAPSHOT.jar &'
+                sh 'sudo cp build/libs/netfflix-0.0.1-SNAPSHOT.jar /home/netfflix'
+                sh 'sudo pkill -f netfflix-0.0.1-SNAPSHOT.jar || true'
+                sh 'sudo nohup java -jar /home/netfflix/netfflix-0.0.1-SNAPSHOT.jar &'
             }
         }
     }
