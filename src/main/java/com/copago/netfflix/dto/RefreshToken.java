@@ -6,7 +6,7 @@ import java.util.Date;
 
 public record RefreshToken(
         @NotBlank(message = "리프레시 토큰 값이 비어있습니다.")
-        String token,
+        String refreshToken,
         @NotNull(message = "리프레시 토큰 만료일 값이 비어있습니다.")
         Date refreshTokenExpiration) {
 }

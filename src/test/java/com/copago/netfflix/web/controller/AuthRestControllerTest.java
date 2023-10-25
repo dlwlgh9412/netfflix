@@ -1,7 +1,7 @@
 package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.AuthService;
-import com.copago.netfflix.web.dto.TokenRequest;
+import com.copago.netfflix.web.dto.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -31,11 +31,11 @@ class AuthRestControllerTest {
 
     @Test
     public void 로그인_시도_유효성_체크_아이디_비밀번호가_비어있을_경우() throws Exception {
-        TokenRequest tokenRequest = new TokenRequest(" ", " ");
+        LoginRequest loginRequest = new LoginRequest(" ", " ");
 
         mockMvc.perform(post("/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(tokenRequest)))
+                .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.fieldErrors.id", Matchers.is(idValidMessage)))
                 .andExpect(jsonPath("$.fieldErrors.password", Matchers.is(passwordValidMessage)));
@@ -43,22 +43,22 @@ class AuthRestControllerTest {
 
     @Test
     public void 로그인_시도_유효성_체크_아이디_비어있을_경우() throws Exception {
-        TokenRequest tokenRequest = new TokenRequest(" ", "Password");
+        LoginRequest loginRequest = new LoginRequest(" ", "Password");
 
         mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(tokenRequest)))
+                        .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.fieldErrors.id", Matchers.is(idValidMessage)));
     }
 
     @Test
     public void 로그인_시도_유효성_체크_비밀번호_비어있을_경우() throws Exception {
-        TokenRequest tokenRequest = new TokenRequest("Id", "");
+        LoginRequest loginRequest = new LoginRequest("Id", "");
 
         mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(tokenRequest)))
+                        .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.fieldErrors.password", Matchers.is(passwordValidMessage)));
     }

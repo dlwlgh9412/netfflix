@@ -17,43 +17,46 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public UserEntity loadUserByUsername(String userId) {
-        return userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException("사용자 정보를 찾을 수 없습니다."));
+    public UserEntity loadUserByUserId(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("사용자 정보를 찾을 수 없습니다."));
     }
 
     @Transactional(readOnly = true)
-    public UserResponse getUserInfo(String id) {
-        UserEntity user = loadUserByUsername(id);
-        return new UserResponse(user);
+    public UserEntity loadUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("사용자 정보를 찾을 수 없습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse getUserInfo(UserInfoDto userInfo) {
+        UserEntity entity = loadUserByUserId(userInfo.id());
+        return new UserResponse(entity);
     }
 
     @Transactional
     public UserRegisterResponse registerUser(UserRegisterRequest request) {
-        if (userRepository.findByUserId(request.id()).isPresent()) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
             throw new NetfflixException("계정이 이미 존재합니다.");
         }
 
-        UserEntity entity = UserEntity.create(request.id(), passwordEncoder.encode(request.password()), request.userName());
+        UserEntity entity = UserEntity.create(request.email(), passwordEncoder.encode(request.password()), request.userName());
         userRepository.save(entity);
 
-        return new UserRegisterResponse(entity.getUserId(), entity.getCreatedAt());
+        return new UserRegisterResponse(entity);
     }
 
     @Transactional
-    public UserUpdateResponse updateUser(String id, UserUpdateRequest request) {
-        userRepository.findByUserId(id).ifPresent(user -> {
-            user.updateInfo(request.userName());
-        });
+    public UserUpdateResponse updateUser(UserInfoDto userInfo, UserUpdateRequest request) {
+        UserEntity entity = loadUserByUserId(userInfo.id());
+        entity.updateInfo(request.userName());
 
-        throw new UserNotFoundException("사용자 정보를 찾을 수 없습니다.");
+        return new UserUpdateResponse(entity);
     }
 
     @Transactional
-    public UserUpdateResponse updatePassword(String id, UserPasswordUpdateRequest request) {
-        userRepository.findByUserId(id).ifPresent(user -> {
-            user.updatedPassword(passwordEncoder.encode(request.password()));
-        });
+    public UserUpdateResponse updatePassword(UserInfoDto userInfo, UserPasswordUpdateRequest request) {
+        UserEntity entity = loadUserByUserId(userInfo.id());
+        entity.updatedPassword(passwordEncoder.encode(request.password()));
 
-        throw new UserNotFoundException("사용자 정보를 찾을 수 없습니다.");
+        return new UserUpdateResponse(entity);
     }
 }

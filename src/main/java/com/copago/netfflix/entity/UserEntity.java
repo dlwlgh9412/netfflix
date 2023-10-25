@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "tb_user", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id"}))
+@Table(name = "tb_user", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -57,8 +57,9 @@ public class UserEntity {
         return this.authorities.stream().map(AuthorityEntity::getAuthority).collect(Collectors.toSet());
     }
 
-    private UserEntity(String userId, String password, String userName) {
-        this.userId = userId;
+    private UserEntity(String email, String password, String userName) {
+        this.email = email;
+        this.password = password;
         this.userName = userName;
     }
 
