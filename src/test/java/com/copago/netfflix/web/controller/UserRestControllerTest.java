@@ -2,6 +2,7 @@ package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.UserService;
 import com.copago.netfflix.web.dto.UserRegisterRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -27,28 +28,35 @@ class UserRestControllerTest {
     @MockBean
     UserService userService;
 
-    private String idValidMessage = "아이디는 필수 입력 값 입니다.";
-    private String passwordValidMessage = "비밀번호가 일치하지 않습니다.";
 
     @Test
-    public void 회원가입_아이디_값이_비어있는_경우() throws Exception {
-        UserRegisterRequest request = new UserRegisterRequest("", "Password", "Password", "");
+    public void 회원가입_이메일_값이_비어있는_경우() throws Exception {
+        UserRegisterRequest request = new UserRegisterRequest("", "Password", "이름");
 
         mockMvc.perform(post("/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.fieldErrors.id", Matchers.is(idValidMessage)));
+                .andExpect(jsonPath("$.errors.email", Matchers.is("이메일은 필수 입력 값 입니다.")));
     }
 
     @Test
-    public void 회원가입_비밀번호_값이_일치하지_않은_경우() throws Exception {
-        UserRegisterRequest request = new UserRegisterRequest("Test_ID", "", "Password", "");
-
+    public void 이메일_형식이_아닌_경우() throws Exception {
+        UserRegisterRequest request = new UserRegisterRequest("test", "Password", "이름");
         mockMvc.perform(post("/v1/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.fieldErrors.matchingPassword", Matchers.is(passwordValidMessage)));
+                .andExpect(jsonPath("$.errors.email", Matchers.is("이메일 형식이 아닙니다.")));
+    }
+
+    @Test
+    public void 유저_이름이_빈_값일_경우() throws Exception {
+        UserRegisterRequest request = new UserRegisterRequest("test", "Password", "");
+        mockMvc.perform(post("/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errors.userName", Matchers.is("이름은 필수 입력 값 입니다.")));
     }
 }

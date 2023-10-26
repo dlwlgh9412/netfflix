@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
@@ -48,7 +47,7 @@ public class RestControllerAdvice {
     private static class ErrorResponse {
         private ErrorCode errorCode;
         private String messages;
-        private Map<String, String> fieldErrors;
+        private Map<String, String> errors;
 
         public ErrorResponse(ErrorCode errorCode, String messages) {
             this.errorCode = errorCode;
@@ -56,17 +55,15 @@ public class RestControllerAdvice {
         }
 
         public ErrorResponse(BindingResult bindingResult) {
-            Map<String, String> fieldErrors = new HashMap<>();
+            Map<String, String> errors = new HashMap<>();
             bindingResult.getAllErrors().forEach((error) -> {
                 String fieldName = ((FieldError) error).getField();
                 String errorMessage = error.getDefaultMessage();
-                fieldErrors.put(fieldName, errorMessage);
+                errors.put(fieldName, errorMessage);
             });
-            this.fieldErrors = fieldErrors;
-        }
 
-        public ErrorResponse(Map<String, String> fieldErrors) {
-            this.fieldErrors = fieldErrors;
+            this.errorCode = ErrorCode.BAD_REQUEST;
+            this.errors = errors;
         }
     }
 }

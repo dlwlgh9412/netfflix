@@ -1,5 +1,6 @@
 package com.copago.netfflix.service;
 
+import com.copago.netfflix.dto.UserInfo;
 import com.copago.netfflix.entity.UserEntity;
 import com.copago.netfflix.exception.NetfflixException;
 import com.copago.netfflix.exception.UserNotFoundException;
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponse getUserInfo(UserInfoDto userInfo) {
+    public UserResponse getUserInfo(UserInfo userInfo) {
         UserEntity entity = loadUserByUserId(userInfo.id());
         return new UserResponse(entity);
     }
@@ -45,7 +46,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserUpdateResponse updateUser(UserInfoDto userInfo, UserUpdateRequest request) {
+    public UserUpdateResponse updateUser(UserInfo userInfo, UserUpdateRequest request) {
         UserEntity entity = loadUserByUserId(userInfo.id());
         entity.updateInfo(request.userName());
 
@@ -53,7 +54,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserUpdateResponse updatePassword(UserInfoDto userInfo, UserPasswordUpdateRequest request) {
+    public UserUpdateResponse updatePassword(UserInfo userInfo, UserPasswordUpdateRequest request) {
         UserEntity entity = loadUserByUserId(userInfo.id());
         entity.updatedPassword(passwordEncoder.encode(request.password()));
 

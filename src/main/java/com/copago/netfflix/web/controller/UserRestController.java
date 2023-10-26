@@ -1,7 +1,7 @@
 package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.UserService;
-import com.copago.netfflix.web.dto.UserInfoDto;
+import com.copago.netfflix.dto.UserInfo;
 import com.copago.netfflix.web.dto.UserUpdateRequest;
 import com.copago.netfflix.web.dto.UserPasswordUpdateRequest;
 import com.copago.netfflix.web.dto.UserRegisterRequest;
@@ -27,13 +27,13 @@ public class UserRestController {
 
     @PatchMapping("/infos")
     @Operation(summary = "사용자 정보 수정")
-    public ResponseEntity<?> modifyUser(UserInfoDto userInfo, @Valid @RequestBody UserUpdateRequest request) {
+    public ResponseEntity<?> modifyUser(UserInfo userInfo, @Valid @RequestBody UserUpdateRequest request) {
         return new ResponseEntity<>(userService.updateUser(userInfo, request), HttpStatus.OK);
     }
 
     @PatchMapping("/password")
     @Operation(summary = "패스워드 변경")
-    public ResponseEntity<?> modifyPassword(UserInfoDto userInfo, @Valid @RequestBody UserPasswordUpdateRequest request) {
+    public ResponseEntity<?> modifyPassword(UserInfo userInfo, @Valid @RequestBody UserPasswordUpdateRequest request) {
         return new ResponseEntity<>(userService.updatePassword(userInfo, request), HttpStatus.OK);
     }
 }

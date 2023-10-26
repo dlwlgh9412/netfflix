@@ -26,30 +26,30 @@ class AuthRestControllerTest {
     @MockBean
     private AuthService authService;
 
-    private String idValidMessage = "아이디는 필수 입력 값 입니다.";
+    private String emailValidMessage = "이메일은 필수 입력 값 입니다.";
     private String passwordValidMessage = "비밀번호는 필수 입력 값 입니다.";
 
     @Test
     public void 로그인_시도_유효성_체크_아이디_비밀번호가_비어있을_경우() throws Exception {
-        LoginRequest loginRequest = new LoginRequest(" ", " ");
+        LoginRequest loginRequest = new LoginRequest("", " ");
 
         mockMvc.perform(post("/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.fieldErrors.id", Matchers.is(idValidMessage)))
-                .andExpect(jsonPath("$.fieldErrors.password", Matchers.is(passwordValidMessage)));
+                .andExpect(jsonPath("$.errors.email", Matchers.is(emailValidMessage)))
+                .andExpect(jsonPath("$.errors.password", Matchers.is(passwordValidMessage)));
     }
 
     @Test
     public void 로그인_시도_유효성_체크_아이디_비어있을_경우() throws Exception {
-        LoginRequest loginRequest = new LoginRequest(" ", "Password");
+        LoginRequest loginRequest = new LoginRequest("", "Password");
 
         mockMvc.perform(post("/v1/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.fieldErrors.id", Matchers.is(idValidMessage)));
+                .andExpect(jsonPath("$.errors.email", Matchers.is(emailValidMessage)));
     }
 
     @Test
@@ -60,7 +60,7 @@ class AuthRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(loginRequest)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.fieldErrors.password", Matchers.is(passwordValidMessage)));
+                .andExpect(jsonPath("$.errors.password", Matchers.is(passwordValidMessage)));
     }
 
 
