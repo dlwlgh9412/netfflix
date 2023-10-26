@@ -2,10 +2,13 @@ package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.UserService;
 import com.copago.netfflix.dto.UserInfo;
+import com.copago.netfflix.web.annotation.AuthenticatedUser;
+import com.copago.netfflix.web.dto.UserResponse;
 import com.copago.netfflix.web.dto.UserUpdateRequest;
 import com.copago.netfflix.web.dto.UserPasswordUpdateRequest;
 import com.copago.netfflix.web.dto.UserRegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,12 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UserRestController {
     private final UserService userService;
+
+    @GetMapping
+    @Operation(summary = "사용자 정보")
+    public ResponseEntity<UserResponse> getUserInfo(@Parameter(hidden = true) @AuthenticatedUser UserInfo userInfo) {
+        return new ResponseEntity<>(userService.getUserInfo(userInfo), HttpStatus.OK);
+    }
 
     @PostMapping
     @Operation(summary = "회원가입")

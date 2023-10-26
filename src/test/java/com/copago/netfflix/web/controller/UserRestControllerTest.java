@@ -1,6 +1,7 @@
 package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.UserService;
+import com.copago.netfflix.util.JwtProvider;
 import com.copago.netfflix.web.dto.UserRegisterRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,9 @@ class UserRestControllerTest {
 
     @MockBean
     UserService userService;
+
+    @MockBean
+    JwtProvider jwtProvider;
 
 
     @Test

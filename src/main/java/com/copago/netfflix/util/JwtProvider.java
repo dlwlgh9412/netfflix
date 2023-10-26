@@ -3,6 +3,7 @@ package com.copago.netfflix.util;
 import com.copago.netfflix.dto.AccessToken;
 import com.copago.netfflix.dto.RefreshToken;
 import com.copago.netfflix.entity.UserEntity;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,10 @@ public class JwtProvider {
         this.refreshExpiration = refreshExpiration;
     }
 
+    public Claims parseClaims(String accessToken) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(accessToken).getBody();
+    }
+
     public AccessToken generateAccessToken(UserEntity user) {
         final long now = System.currentTimeMillis();
         Date accessTokenExpiration = new Date(now + accessExpiration);
@@ -38,6 +43,7 @@ public class JwtProvider {
                 .setIssuedAt(new Date(now))
                 .setExpiration(accessTokenExpiration)
                 .signWith(SignatureAlgorithm.HS512, secret)
+                .setClaims(Map.of("id", user.getId()))
                 .compact();
 
         return new AccessToken(token, accessTokenExpiration);

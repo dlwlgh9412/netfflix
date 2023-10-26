@@ -1,6 +1,7 @@
 package com.copago.netfflix.web.controller;
 
 import com.copago.netfflix.service.AuthService;
+import com.copago.netfflix.util.JwtProvider;
 import com.copago.netfflix.web.dto.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -25,6 +26,9 @@ class AuthRestControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private JwtProvider jwtProvider;
 
     private String emailValidMessage = "이메일은 필수 입력 값 입니다.";
     private String passwordValidMessage = "비밀번호는 필수 입력 값 입니다.";
