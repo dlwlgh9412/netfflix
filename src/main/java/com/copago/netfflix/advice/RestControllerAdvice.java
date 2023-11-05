@@ -47,11 +47,11 @@ public class RestControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.UNAUTHORIZED, ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> illegalArgumentException(IllegalArgumentException illegalArgumentException) {
-        log.error("IllegalArgumentException: {}", illegalArgumentException.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "잘못된 요청 값 입니다."), HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public ResponseEntity<?> illegalArgumentException(IllegalArgumentException illegalArgumentException) {
+//        log.error("IllegalArgumentException: {}", illegalArgumentException.getMessage());
+//        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "잘못된 요청 값 입니다."), HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(ExportException.class)
     public ResponseEntity<?> exportException(ExportException ex) {
