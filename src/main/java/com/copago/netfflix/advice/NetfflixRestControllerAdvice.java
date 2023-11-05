@@ -17,16 +17,16 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.rmi.server.ExportException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@ControllerAdvice
-public class RestControllerAdvice {
+@RestControllerAdvice
+public class NetfflixRestControllerAdvice {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<?> bindException(BindException ex) {
         return new ResponseEntity<>(new ErrorResponse(ex.getBindingResult()), HttpStatus.BAD_REQUEST);
