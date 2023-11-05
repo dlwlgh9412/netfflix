@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class BadCredentialsException extends RuntimeException {
     public BadCredentialsException() {
-        super("아이디와 패스워드를 확인해주세요.");
+        super("사용자 인증을 할 수 없습니다.");
     }
 
     public BadCredentialsException(String message) {

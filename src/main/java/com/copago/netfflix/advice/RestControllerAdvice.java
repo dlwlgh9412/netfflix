@@ -50,13 +50,13 @@ public class RestControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> illegalArgumentException(IllegalArgumentException illegalArgumentException) {
         log.error("IllegalArgumentException: {}", illegalArgumentException.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "잘못된 파라미터 입니다."), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "잘못된 요청 값 입니다."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ExportException.class)
     public ResponseEntity<?> exportException(ExportException ex) {
         log.error("Jwt parse error -> exportException: {}", ex.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "토큰 변환 중 오류가 발생하였습니다."), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "토큰 변환 중 오류가 발생 하였습니다."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnsupportedJwtException.class)
@@ -74,7 +74,7 @@ public class RestControllerAdvice {
     @ExceptionHandler(MalformedJwtException.class)
     public ResponseEntity<?> malformedJwtException(MalformedJwtException ex) {
         log.error("Jwt parse error -> signatureException: {}", ex.getMessage());
-        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "올바르지 않은 구성형식의 토큰 입니다."), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST, "올바르지 않은 구성 형식의 토큰 입니다."), HttpStatus.BAD_REQUEST);
     }
 
     @Getter
